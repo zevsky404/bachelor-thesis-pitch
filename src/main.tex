@@ -66,16 +66,16 @@
     \end{frame}
 
     \begin{frame}{r/ChangeMyView}
-        \includegraphics[width=\textwidth]{../images/Screenshot_2024-04-22-15-24-35_1920x1080}
+        \includegraphics[width=\textwidth]{../images/cmv-example-main-page}
     \end{frame}
 
     \begin{frame}{r/ChangeMyView}
         \begin{columns}
             \begin{column}{0.5\textwidth}
-                \includegraphics[width=\textwidth]{../images/Screenshot_2024-04-22-15-31-26_1920x1080}
+                \includegraphics[width=\textwidth]{../images/cmv-example-op}
             \end{column}
             \begin{column}{0.5\textwidth}
-                \includegraphics[width=\textwidth]{../images/Screenshot_2024-04-22-15-31-26_1920x1080 (1)}
+                \includegraphics[width=\textwidth]{../images/cmv-example-thread}
             \end{column}
         \end{columns}
     \end{frame}
@@ -168,6 +168,16 @@
         \end{itemize}
     \end{frame}
 
+    \begin{frame}{Problematik}
+        \item offene Fragen:
+        \begin{itemize}
+            \item Was ist eigentlich in den Clustern drin?
+            \item Sind die representativen Sequenzen aus dem Paper tatsächlich representativ?
+            \item Welche Muster gibt es in den Argumentationsstrukturen?
+            Kann man als Mensch diese als \lq\lq{}überzeugend\rq\rq{} oder \lq\lq{}nicht überzeugend\rq\rq{} einordnen?
+        \end{itemize}
+    \end{frame}
+
     \End
 
     \Section{Daten}
@@ -177,10 +187,19 @@
         \textbf{DATEN}
     \end{frame}
 
+    \begin{frame}{Daten}
+        \begin{itemize}
+            \item \textasciitilde 34k Branches (ein Pfad von der Wurzel (OP) bis zu einem Leaf-Kommentar)
+            \item \textasciitilde 3k Branches, die ein Delta erhalten haben
+            \item \textrightarrow{} Visualisierung aller Threads schwierig
+            \item Aufteilung in Polyloge und Dialoge
+        \end{itemize}
+    \end{frame}
+
     \begin{frame}{Aufbau}
         \begin{itemize}
             \item Auflistung in JSON Files
-            \item einzelnes File = ein Thread/eine einzelne Unterhaltung
+            \item einzelnes File = eine einzelne Unterhaltung
             \item Filename = eindeutige ID des OP, Threads aufsteigend nummeriert
             \item Informationen pro Kommentar:
             \begin{itemize}
@@ -207,7 +226,7 @@
         \begin{itemize}
             \item Cluster in eigenen Files
             \item OP Cluster und Comment Cluster getrennt
-            \item JSONL Files: eine Zeile = \texttt{[comment\_id, abstract\_adus, sequence, cluster]}
+            \item JSONL Files: eine Zeile = \texttt{\{comment\_id, abstract\_adus, sequence, cluster\}}
             \begin{itemize}
                 \item \texttt{comment\_id}: ID des Kommentar oder Posts
                 \item \texttt{abstract\_adus}: Liste mit verkürzter Liste der im Text enthaltenen ADU Types in Worten
@@ -222,9 +241,37 @@
             \item per Python Script
             \item Sortieren aller Files mit der gleichen ID (einem Baum angehörig) in einen Unterordner (ID als Name)
             \item Iterieren über alle Unterordner und den enthaltenen Files
-            \item Aufbauen eines großen CSV File für das Verarbeiten in d3 mit den nötigen Daten
+            \item Aufbauen eines großen JSON File für das Verarbeiten in d3 mit den nötigen Daten
             \item Verschiedene Eigenschaften werden eingelesen je nach Visualisierung
         \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Verarbeitung}
+        \begin{itemize}
+            \item JSON File = Array mit Arrays, ein Array = Informationen aus einem Unterordner als JSON
+            \item mehrere kleinere .csv Files mit nötigen Informationen für andere Visualisierungen \textrightarrow meistens per Cluster
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Verarbeitung}
+        \begin{columns}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=\textwidth]{../images/json-file-example}
+                    \caption{Beispiel eines großen JSON Files}
+                    \label{fig:json-file-example}
+                \end{figure}
+            \end{column}
+            \begin{column}{0.5\textwidth}
+                \begin{figure}
+                    \centering
+                    \includegraphics[width=0.8\textwidth]{../images/csv-file-example}
+                    \caption{Beispiel eines CSV Files (Anzahl aller Sequenzen in C1)}
+                    \label{fig:csv-file-example}
+                \end{figure}
+            \end{column}
+        \end{columns}
     \end{frame}
 
     \End
@@ -269,52 +316,112 @@
                     \item Strukturelle Untersuchung der Threads/Bäume
                     \item Visuelle Untersuchung des Inhalts von Clustern
                     \begin{itemize}
-                        \item
+                        \item Welche Sequenzen kommen vor und wie oft?
+                        \item In welchen Anteilen sind die ADU Types enthalten?
+                        \item Welche ADU Types folgen wie oft auf andere?
+                    \end{itemize}
+                    \item Aufbau der Diskussionen
+                    \begin{itemize}
+                        \item Welche Cluster folgen oft auf andere?
                     \end{itemize}
                 \end{itemize}
             \end{column}
             \begin{column}{0.5\textwidth}
                 \textbf{Ausgeschlossen}
+                \begin{itemize}
+                    \item Untersuchung des zeitlichen Einflusses und OP Verhalten
+                    \item nähere Untersuchung der User \textrightarrow{} mit den vorhandenen Informationen schwierig, von anderem Webis Paper untersucht
+                    \item Vergleiche zwischen Delta und nicht-Delta durch große Datenmengen schwierig(er)
+                \end{itemize}
             \end{column}
         \end{columns}
     \end{frame}
 
     \End
 
-    \Section{Erste Visualisierungen}
-    \begin{frame}{Threads}
+    \begin{frame}[plain,standout]
+        \centering
+        \textbf{ERSTE VISUALISIERUNGEN}
+    \end{frame}
 
+    \Section{Erste Visualisierungen}
+
+    \begin{frame}{Threads}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{../images/threads-example}
+            \caption{Thread Visualisierung zur strukturellen Untersuchung (Polyloge)}
+            \label{fig:thread-example}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Threads}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.55\textwidth]{../images/single-thread-example}
+            \caption{Thread Visualisierung zur strukturellen Untersuchung (Polyloge)}
+            \label{fig:single-thread-example}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Barcharts + Piecharts}
-
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../images/bar-pie-charts-example}
+            \caption{Bar- und Piecharts zur Untersuchung des Aufbaus der einzelnen Cluster (hier C6)}
+            \label{fig:bar-pie-charts-example}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Heatmaps + Bars}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../images/heatmaps-example}
+            \caption{Heatmaps zur Untersuchung von strukturellen Eigenschaften der Cluster}
+            \label{fig:heatmaps-example}
+        \end{figure}
+    \end{frame}
 
+    \begin{frame}{Heatmaps + Bars}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../images/heatmap-bars-example}
+            \caption{Barcharts zur Untersuchung von aufeinanderfolgenen gleichen ADU Types (werden den Heatmaps hinzugefügt oder mit entcoded)}
+            \label{fig:heatmap-bars-example}
+        \end{figure}
     \end{frame}
 
     \End
-
-    \Section{Erste Ergebnisse}
 
     \begin{frame}[plain,standout]
         \centering
         \textbf{ERSTE ERGEBNISSE}
     \end{frame}
 
-    \begin{frame}{Unsere Visualisierung}
-
-    \end{frame}
+    \Section{Erste Ergebnisse}
 
     \begin{frame}{Webis Paper}
+        \begin{itemize}
+            \item kürzere Threads erhielten mehr Deltas als längere (Webseiten Layout Einfluss?)
+            \item Optimum ist bei 2--3 Posts per Branch für ein Delta
+            \item auf diesem Datensatz trainierte Models sind besser im bestimmen, ob eine Sequenz von Clustern Überzeugend ist oder nicht
+        \end{itemize}
+    \end{frame}
 
+    \begin{frame}{Unsere Visualisierung}
+        \begin{itemize}
+            \item Values sind der am meisten vorkommende ADU Type
+            \item Cluster unterscheiden sich sichtbar im Aufbau
+            \item Muster im Threadaufbau = kurz, simpel
+        \end{itemize}
     \end{frame}
     \End
 
     \Section{Naechste Schritte}
     \begin{frame}{Was Lohnt Sich}
-
+        \begin{itemize}
+            \item Einsichten der Heatmaps sind sehr interessant
+        \end{itemize}
     \end{frame}
     \End
 
