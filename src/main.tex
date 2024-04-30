@@ -54,7 +54,7 @@
 
     \begin{frame}{r/ChangeMyView}
         \begin{itemize}
-            \item Subreddit, i.e.\ ein Forum der großen Social Media Seite Reddit.com
+            \item Subreddit, also ein Forum der großen Social Media Seite Reddit.com
             \item Prinzip:
             \begin{itemize}
                 \item OP beschreibt Meinung über ein Thema mit Begründung
@@ -90,12 +90,12 @@
 
     \End
 
-    \Section{Grundliegendes Paper}
-
     \begin{frame}[plain,standout]
         \centering
         \textbf{GRUNDLIEGENDES PAPER}
     \end{frame}
+
+    \Section{Grundliegendes Paper}
 
     \begin{frame}
         \frametitle{Inhalt}
@@ -145,12 +145,16 @@
 
     \begin{frame}
         \frametitle{Ergebnisse \& Erkenntnisse}
-        \textit{Haupterkenntnis:} Nach Training ist Language Model/Transformer wesentlich besser im Erkennen von stärkeren Argumentationen/Argumentationssträngen als z.B.\ BERT-like Modelle
+        \textit{Haupterkenntnis:} Nach Training ist Language Model/Transformer wesentlich besser im Erkennen von stärkeren Argumentationen/Argumentationssträngen als z.B.\ BERT-like Language Models
     \end{frame}
 
     \begin{frame}
         \frametitle{Ergebnisse \& Erkenntnisse}
         Andere Einsichten:
+        \begin{itemize}
+            \item kürzere Threads erhielten mehr Deltas als längere (Webseiten Layout Einfluss?)
+            \item Optimum ist bei 2--3 Posts per Branch für ein Delta
+        \end{itemize}
     \end{frame}
 
     \begin{frame}{Problematik}
@@ -158,13 +162,6 @@
             \item Abstraktion von Sequenzen und Zusammenfassung in Clustern
             \item Representative Sequenzen der Cluster = die am häufigsten vorkommende Sequenz
             \item einziger Anwendungsfall: persuasion prediction \textrightarrow{} keine Antwort, was eigentlich überzeugend ist
-            \item offene Fragen:
-            \begin{itemize}
-                \item Was ist eigentlich in den Clustern drin?
-                \item Sind die representativen Sequenzen aus dem Paper tatsächlich representativ?
-                \item Welche Muster gibt es in den Argumentationsstrukturen?
-                Kann man als Mensch diese als \lq\lq{}überzeugend\rq\rq{} oder \lq\lq{}nicht überzeugend\rq\rq{} einordnen?
-            \end{itemize}
         \end{itemize}
     \end{frame}
 
@@ -180,12 +177,12 @@
 
     \End
 
-    \Section{Daten}
-
     \begin{frame}[plain,standout]
         \centering
         \textbf{DATEN}
     \end{frame}
+
+    \Section{Daten}
 
     \begin{frame}{Daten}
         \begin{itemize}
@@ -216,9 +213,18 @@
     \begin{frame}{Aufbau}
         \begin{figure}
             \centering
-            \includegraphics[width=\textwidth]{../images/data-files-structure}
+            \includegraphics[width=0.9\textwidth]{../images/data-files-structure}
             \caption{Visuelle Aufteilung der Files und deren Inhalt angefangen vom Reddit Post}
             \label{fig:data-structure}
+        \end{figure}
+    \end{frame}
+
+    \begin{frame}{Aufbau}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.9\textwidth]{../images/single-file-example}
+            \caption{Beispielinhalt eines einzelnen Files}
+            \label{fig:single-file-example}
         \end{figure}
     \end{frame}
 
@@ -234,6 +240,15 @@
                 \item \texttt{cluster}: Das Cluster, in welches diese Sequenz eingeordnet wird
             \end{itemize}
         \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Aufbau}
+        \begin{figure}
+            \centering
+            \includegraphics[width=0.8\textwidth]{../images/cluster-file-example}
+            \caption{Ausschnitt aus einem Cluster File}
+            \label{fig:cluster-file-example}
+        \end{figure}
     \end{frame}
 
     \begin{frame}{Verarbeitung}
@@ -276,12 +291,12 @@
 
     \End
 
-    \Section{Fragestellungen}
-
     \begin{frame}[plain,standout]
         \centering
         \textbf{FRAGESTELLUNG}
     \end{frame}
+
+    \Section{Fragestellungen}
 
     \begin{frame}{Brainstorming}
         \begin{itemize}
@@ -400,35 +415,36 @@
 
     \Section{Erste Ergebnisse}
 
-    \begin{frame}{Webis Paper}
-        \begin{itemize}
-            \item kürzere Threads erhielten mehr Deltas als längere (Webseiten Layout Einfluss?)
-            \item Optimum ist bei 2--3 Posts per Branch für ein Delta
-            \item auf diesem Datensatz trainierte Models sind besser im bestimmen, ob eine Sequenz von Clustern Überzeugend ist oder nicht
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Unsere Visualisierung}
+    \begin{frame}{Einsichten}
         \begin{itemize}
             \item Values sind der am meisten vorkommende ADU Type
+            \item ein paar Sequenzen pro Cluster kommen sehr oft vor, der Großteil nur noch wenig oder sogar nur einmal
             \item Cluster unterscheiden sich sichtbar im Aufbau
-            \item Muster im Threadaufbau = kurz, simpel
-        \end{itemize}
-    \end{frame}
-    \End
-
-    \Section{Naechste Schritte}
-    \begin{frame}{Was Lohnt Sich}
-        \begin{itemize}
-            \item Einsichten der Heatmaps sind sehr interessant
+            \item Muster im Threadaufbau = kurz, simpel, wenig verzweigt
         \end{itemize}
     \end{frame}
     \End
 
     \begin{frame}[plain,standout]
         \centering
-        In combination with \textit{plain}, \\
-        it makes a nice thank-you slide!
+        \textbf{NÄCHSTE SCHRITTE}
+    \end{frame}
+
+    \Section{Naechste Schritte}
+
+    \begin{frame}{Was Lohnt Sich}
+        \begin{itemize}
+            \item Einsichten der Heatmaps sind sehr interessant
+            \item Vergleich zwischen Polylogen und Dialogen
+            \item Vergleich zwischen Delta Threads und Subset von nicht-Delta Threads?
+        \end{itemize}
+    \end{frame}
+
+    \End
+
+    \begin{frame}[plain,standout]
+        \centering
+        \textbf{FRAGEN \& DISKUSSION}
     \end{frame}
 
 \end{document}
