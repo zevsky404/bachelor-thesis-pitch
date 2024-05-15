@@ -1,21 +1,16 @@
-% arguelles v2.3.0
-% author: Michele Piazzai
-% contact: michele.piazzai@uc3m.es
-% license: MIT
-
 % Copied from GitHub: https://github.com/piazzai/arguelles
 
 \documentclass[compress,12pt]{beamer}
 
-\usetheme{Arguelles}
+\usetheme[sans]{Arguelles}
 \usepackage[german]{babel}
 \usepackage{textcomp}
 \usepackage[utf-8]{inputenc}
 \usepackage[T1]{fontenc}
 
 
-\title{Bachelorarbeit Visualisierung}
-\subtitle{Daten, Fortschritt, erste Ergebnisse, Ideen}
+\title{Zwischenergebnisse}
+\subtitle{Bachelorarbeit \textit{r/ChangeMyView} Visualisation}
 \event{}
 \date{}
 \author{Christiane Gütter}
@@ -25,28 +20,27 @@
 
     \frame[plain]{\titlepage}
 
-    \begin{frame}[plain]
-        \frametitle{Themen}
-        \begin{enumerate}
-            \item Einführung in das Thema
-            \item Übersicht grundliegendes Paper
-            \item Daten
-            \begin{enumerate}
-                \item Aufbau
-                \item Verarbeitung
-            \end{enumerate}
-            \item Erste potentielle Fragestellungen
-            \item Erste Ergebnisse
-            \begin{enumerate}
-                \item Erste Visualisierungen
-                \item Vergleiche mit Ergebnissen aus Paper
-            \end{enumerate}
-            \item Nächste Schritte
-        \end{enumerate}
-    \end{frame}
+%    \begin{frame}[plain]
+%        \frametitle{Themen}
+%        \begin{enumerate}
+%            \item Einführung in das Thema
+%            \item Übersicht grundliegendes Paper
+%            \item Daten
+%            \begin{enumerate}
+%                \item Aufbau
+%                \item Verarbeitung
+%            \end{enumerate}
+%            \item Erste potentielle Fragestellungen
+%            \item Erste Ergebnisse
+%            \begin{enumerate}
+%                \item Erste Visualisierungen
+%                \item Vergleiche mit Ergebnissen aus Paper
+%            \end{enumerate}
+%            \item Nächste Schritte
+%        \end{enumerate}
+%    \end{frame}
 
     \Section{Einfuehrung}
-
     \begin{frame}[plain,standout]
         \centering
         \textbf{EINFÜHRUNG}
@@ -65,37 +59,33 @@
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{r/ChangeMyView}
-        \includegraphics[width=\textwidth]{../images/cmv-example-main-page}
+    \begin{frame}[plain]
+        \frametitle{r/ChangeMyView}
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{../images/cmv-example-main-page}
+            \caption{Frontpage des Subreddits}
+            \label{fig:frontpage}
+        \end{figure}
     \end{frame}
 
-    \begin{frame}{r/ChangeMyView}
+    \begin{frame}[plain]
+        \frametitle{r/ChangeMyView}
         \begin{columns}
             \begin{column}{0.5\textwidth}
-                \includegraphics[width=\textwidth]{../images/cmv-example-op}
+                \includegraphics[width=\columnwidth]{../images/cmv-example-op}
             \end{column}
             \begin{column}{0.5\textwidth}
-                \includegraphics[width=\textwidth]{../images/cmv-example-thread}
+                \includegraphics[width=\columnwidth]{../images/cmv-example-thread}
             \end{column}
         \end{columns}
     \end{frame}
 
-    \begin{frame}{Ziele}
-        \begin{itemize}
-            \item Unterstützen des Papers der Webis Gruppe durch Visualisierungen
-            \item Einsicht geben in Fragen und Problematiken, die das Paper noch offen lässt
-            \item Erkenntnisse des Papers mit neuen Fragestellungen erweitern
-        \end{itemize}
-    \end{frame}
-
-    \End
-
+    \Section{Zugrundeliegende Daten}
     \begin{frame}[plain,standout]
         \centering
-        \textbf{GRUNDLIEGENDES PAPER}
+        \textbf{ZUGRUNDELIEGENDE DATEN}
     \end{frame}
-
-    \Section{Grundliegendes Paper}
 
     \begin{frame}
         \frametitle{Inhalt}
@@ -121,16 +111,15 @@
             \end{itemize}
         \end{itemize}
     \end{frame}
-
-    \begin{frame}
+    
+    \begin{frame}[plain]
         \frametitle{Inhalt}
-        \begin{itemize}
-            \item Zusammenfassen dieser ADU types in Sequenzen auf Kommentarebene
-            \item Abstrahieren der Sequenzen
-            \item Clustering der Sequenzen in Cluster durch zwei verschiedene Ähnlichkeitsmaße
-            \item Nutzen der Sequenzen von Clustern, um persuasiveness mit Transformern zu bestimmen
-        \end{itemize}
-
+        \begin{figure}
+            \centering
+            \includegraphics[width=\textwidth]{../images/sequencing-part-1}
+            \caption{Weg vom Kommentar zur Sequenz}
+            \label{fig:comment-to-sequence}
+        \end{figure}
     \end{frame}
 
     \begin{frame}
@@ -142,47 +131,6 @@
             \label{fig:adu-sequencing}
         \end{figure}
     \end{frame}
-
-    \begin{frame}
-        \frametitle{Ergebnisse \& Erkenntnisse}
-        \textit{Haupterkenntnis:} Nach Training ist Language Model/Transformer wesentlich besser im Erkennen von stärkeren Argumentationen/Argumentationssträngen als z.B.\ BERT-like Language Models
-    \end{frame}
-
-    \begin{frame}
-        \frametitle{Ergebnisse \& Erkenntnisse}
-        Andere Einsichten:
-        \begin{itemize}
-            \item kürzere Threads erhielten mehr Deltas als längere (Webseiten Layout Einfluss?)
-            \item Optimum ist bei 2--3 Posts per Branch für ein Delta
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Problematik}
-        \begin{itemize}
-            \item Abstraktion von Sequenzen und Zusammenfassung in Clustern
-            \item Representative Sequenzen der Cluster = die am häufigsten vorkommende Sequenz
-            \item einziger Anwendungsfall: persuasion prediction \textrightarrow{} keine Antwort, was eigentlich überzeugend ist
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Problematik}
-        \item offene Fragen:
-        \begin{itemize}
-            \item Was ist eigentlich in den Clustern drin?
-            \item Sind die representativen Sequenzen aus dem Paper tatsächlich representativ?
-            \item Welche Muster gibt es in den Argumentationsstrukturen?
-            Kann man als Mensch diese als \lq\lq{}überzeugend\rq\rq{} oder \lq\lq{}nicht überzeugend\rq\rq{} einordnen?
-        \end{itemize}
-    \end{frame}
-
-    \End
-
-    \begin{frame}[plain,standout]
-        \centering
-        \textbf{DATEN}
-    \end{frame}
-
-    \Section{Daten}
 
     \begin{frame}{Daten}
         \begin{itemize}
@@ -198,19 +146,11 @@
             \item Auflistung in JSON Files
             \item einzelnes File = eine einzelne Unterhaltung
             \item Filename = eindeutige ID des OP, Threads aufsteigend nummeriert
-            \item Informationen pro Kommentar:
-            \begin{itemize}
-                \item \texttt{parent\_id}: ID des parent Kommentars (null wenn OP)
-                \item \texttt{id}: ID des Kommentar
-                \item \texttt{author}: Username des Verfassers
-                \item \texttt{title}: Titel des OP (null wenn Kommentar)
-                \item \texttt{body}: gesamter OP oder Kommentar
-                \item \texttt{preds}: Liste der mit ADU-types getaggten Wortgruppen mit entsprechendem ADU type und certainty score
-            \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Aufbau}
+    \begin{frame}[plain]
+        \frametitle{Aufbau}
         \begin{figure}
             \centering
             \includegraphics[width=0.9\textwidth]{../images/data-files-structure}
@@ -219,7 +159,8 @@
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Aufbau}
+    \begin{frame}[plain]
+        \frametitle{Aufbau}
         \begin{figure}
             \centering
             \includegraphics[width=0.9\textwidth]{../images/single-file-example}
@@ -233,133 +174,128 @@
             \item Cluster in eigenen Files
             \item OP Cluster und Comment Cluster getrennt
             \item JSONL Files: eine Zeile = \texttt{\{comment\_id, abstract\_adus, sequence, cluster\}}
-            \begin{itemize}
-                \item \texttt{comment\_id}: ID des Kommentar oder Posts
-                \item \texttt{abstract\_adus}: Liste mit verkürzter Liste der im Text enthaltenen ADU Types in Worten
-                \item \texttt{sequence}: Liste der ADU Types in einzelnen Buchstaben (Anfangsbuchstabe)
-                \item \texttt{cluster}: Das Cluster, in welches diese Sequenz eingeordnet wird
-            \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Aufbau}
+    \begin{frame}[plain]
+        \frametitle{Aufbau}
         \begin{figure}
             \centering
-            \includegraphics[width=0.8\textwidth]{../images/cluster-file-example}
+            \includegraphics[width=0.9\textwidth]{../images/cluster-file-example}
             \caption{Ausschnitt aus einem Cluster File}
             \label{fig:cluster-file-example}
         \end{figure}
     \end{frame}
 
-    \begin{frame}{Verarbeitung}
-        \begin{itemize}
-            \item per Python Script
-            \item Sortieren aller Files mit der gleichen ID (einem Baum angehörig) in einen Unterordner (ID als Name)
-            \item Iterieren über alle Unterordner und den enthaltenen Files
-            \item Aufbauen eines großen JSON File für das Verarbeiten in d3 mit den nötigen Daten
-            \item Verschiedene Eigenschaften werden eingelesen je nach Visualisierung
-        \end{itemize}
-    \end{frame}
+%    \begin{frame}{Verarbeitung}
+%        \begin{itemize}
+%            \item per Python Script, Darstellung mit d3 und JS
+%            \item Sortieren aller Files mit der gleichen ID (einem Baum angehörig) in einen Unterordner (ID als Name)
+%            \item Iterieren über alle Unterordner und den enthaltenen Files
+%            \item Aufbauen eines großen JSON File (Array aus Arrays) für das Verarbeiten in d3 mit den nötigen Daten
+%            \item Generieren verschiedener CSV Files für verschiedene Visualisierungen
+%        \end{itemize}
+%    \end{frame}
+%
+%    \begin{frame}[plain]
+%        \frametitle{Verarbeitung}
+%        \begin{columns}
+%            \begin{column}{0.5\textwidth}
+%                \begin{figure}
+%                    \centering
+%                    \includegraphics[width=\textwidth]{../images/json-file-example}
+%                    \caption{Beispiel eines großen JSON Files}
+%                    \label{fig:json-file-example}
+%                \end{figure}
+%            \end{column}
+%            \begin{column}{0.5\textwidth}
+%                \begin{figure}
+%                    \centering
+%                    \includegraphics[width=0.8\textwidth]{../images/csv-file-example}
+%                    \caption{Beispiel eines CSV Files (Anzahl aller Sequenzen in C1)}
+%                    \label{fig:csv-file-example}
+%                \end{figure}
+%            \end{column}
+%        \end{columns}
+%    \end{frame}
 
-    \begin{frame}{Verarbeitung}
-        \begin{itemize}
-            \item JSON File = Array mit Arrays, ein Array = Informationen aus einem Unterordner als JSON
-            \item mehrere kleinere .csv Files mit nötigen Informationen für andere Visualisierungen \textrightarrow meistens per Cluster
-        \end{itemize}
-    \end{frame}
-
-    \begin{frame}{Verarbeitung}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=\textwidth]{../images/json-file-example}
-                    \caption{Beispiel eines großen JSON Files}
-                    \label{fig:json-file-example}
-                \end{figure}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \begin{figure}
-                    \centering
-                    \includegraphics[width=0.8\textwidth]{../images/csv-file-example}
-                    \caption{Beispiel eines CSV Files (Anzahl aller Sequenzen in C1)}
-                    \label{fig:csv-file-example}
-                \end{figure}
-            \end{column}
-        \end{columns}
-    \end{frame}
-
-    \End
-
+    \Section{Fragestellungen}
     \begin{frame}[plain,standout]
         \centering
         \textbf{FRAGESTELLUNG}
     \end{frame}
 
-    \Section{Fragestellungen}
+    \begin{frame}
+        \frametitle{Ergebnisse \& Erkenntnisse}
+        \textit{Haupterkenntnis:} Nach Training ist Language Model/Transformer wesentlich besser im Erkennen von stärkeren Argumentationen/Argumentationssträngen als z.B.\ BERT-like Language Models \\
+        \vspace{1pc}
+        \textit{weitere Erkenntnisse:} Optimum ist bei 2--3 Posts per Branch für ein Delta, kürzere Unterhaltungen erhielten eher ein Delta als längere
+    \end{frame}
 
-    \begin{frame}{Brainstorming}
+    \begin{frame}
+        \frametitle{Ergebnisse \& Erkenntnisse}
+        Was uns aufgefallen ist:
         \begin{itemize}
-            \item sehr angelehnt an offene Fragestellungen aus dem Paper:
+            \item Layout der Webseite: 2--3 Kommentare werden angezeigt, bis man den Rest aufklappen muss
+            \item Zeitlicher Einfluss (Vergabe von Deltas hört irgendwann auf)
+            \item Fülle der Kommentare (OP kann nicht alle Kommentare lesen und auf sie eingehen)
+        \end{itemize}
+    \end{frame}
+
+    \begin{frame}{Problematik}
+        \item offene Fragen:
+        \begin{itemize}
+            \item Abstraktion von Sequenzen und Zusammenfassung in Clustern \textrightarrow{} Was ist eigentlich in den Clustern drin?
+            \item Sind die representativen Sequenzen aus dem Paper tatsächlich representativ?
+            \item Welche Muster gibt es in den Argumentationsstrukturen?
+            Kann man als Mensch diese als \lq\lq{}überzeugend\rq\rq{} oder \lq\lq{}nicht überzeugend\rq\rq{} einordnen?
+            \item Welchen Einfluss hat die (Gesamt-)Diskussion auf die finale Vergabe des Deltas?
+        \end{itemize}
+    \end{frame}
+
+%    \begin{frame}{Nicht im Fokus oder Scope}
+%        \begin{itemize}
+%            \item Untersuchung des zeitlichen Einflusses und OP Verhalten
+%            \item nähere Untersuchung der User \textrightarrow{} mit den vorhandenen Informationen schwierig, von anderem Webis Paper untersucht
+%            \item Vergleiche zwischen Delta und nicht-Delta durch große Datenmengen schwierig(er)
+%        \end{itemize}
+%    \end{frame}
+
+    \begin{frame}{Im Fokus}
+        \begin{itemize}
+            \item Strukturelle Untersuchung der Threads/Bäume
+            \item Visuelle und statistische Untersuchung des Inhalts von Clustern:
             \begin{itemize}
-                \item sinnige Visualisierung vom Inhalt der Cluster
-                \item unterstützende Visualisierung um Aufbau der Cluster zu erschließen (representative Eigenschaften)
-                \item Strukturen der Threads visuell Untersuchen, um Muster für effektive Argumentationen zu erkennen
+                \item Welche Sequenzen kommen vor und wie oft?
+                \item In welchen Anteilen sind die ADU Types enthalten?
+                \item Welche ADU Types folgen wie oft auf andere?
+            \end{itemize}
+            \item Aufbau der Diskussionen:
+            \begin{itemize}
+                \item Welche Cluster folgen oft auf andere in \lq\lq{}überzeugenden\rq\rq{} Diskussionen?
             \end{itemize}
         \end{itemize}
     \end{frame}
 
-    \begin{frame}{Brainstorming}
-        \begin{itemize}
-            \item Untersuchen der User und deren Einfluss:
-            \begin{itemize}
-                \item in Polylogen: ist Beteiligung von mehr Leuten effektiver?\ Polyloge vs.\ Dialoge?
-                \item Sind viele kurze Antworten effektiver als weniger lange?
-                \item Bekommen User mit schon vielen Deltas potientiell noch mehr Deltas?
-                \item In welchen Clustern kommen welche User vor?
-                \item Wie hat die Aktivität von OP die Ergebnisse beeinflusst?\ (Zeit, Menge der Antworten, etc.)
-            \end{itemize}
-            \item Einfluss des Layouts der Webseite auf die Ergebnisse
-        \end{itemize}
-    \end{frame}
+%    \begin{frame}{Brainstorming}
+%        \begin{itemize}
+%            \item Untersuchen der User und deren Einfluss:
+%            \begin{itemize}
+%                \item in Polylogen: ist Beteiligung von mehr Leuten effektiver?\ Polyloge vs.\ Dialoge?
+%                \item Sind viele kurze Antworten effektiver als weniger lange?
+%                \item Bekommen User mit schon vielen Deltas potientiell noch mehr Deltas?
+%                \item In welchen Clustern kommen welche User vor?
+%                \item Wie hat die Aktivität von OP die Ergebnisse beeinflusst?\ (Zeit, Menge der Antworten, etc.)
+%            \end{itemize}
+%            \item Einfluss des Layouts der Webseite auf die Ergebnisse
+%        \end{itemize}
+%    \end{frame}
 
-    \begin{frame}{Ein- und Ausschlüsse}
-        \begin{columns}
-            \begin{column}{0.5\textwidth}
-                \textbf{In Betracht gezogen}
-                \begin{itemize}
-                    \item Strukturelle Untersuchung der Threads/Bäume
-                    \item Visuelle Untersuchung des Inhalts von Clustern
-                    \begin{itemize}
-                        \item Welche Sequenzen kommen vor und wie oft?
-                        \item In welchen Anteilen sind die ADU Types enthalten?
-                        \item Welche ADU Types folgen wie oft auf andere?
-                    \end{itemize}
-                    \item Aufbau der Diskussionen
-                    \begin{itemize}
-                        \item Welche Cluster folgen oft auf andere?
-                    \end{itemize}
-                \end{itemize}
-            \end{column}
-            \begin{column}{0.5\textwidth}
-                \textbf{Ausgeschlossen}
-                \begin{itemize}
-                    \item Untersuchung des zeitlichen Einflusses und OP Verhalten
-                    \item nähere Untersuchung der User \textrightarrow{} mit den vorhandenen Informationen schwierig, von anderem Webis Paper untersucht
-                    \item Vergleiche zwischen Delta und nicht-Delta durch große Datenmengen schwierig(er)
-                \end{itemize}
-            \end{column}
-        \end{columns}
-    \end{frame}
-
-    \End
-
+    \Section{Erste Visualisierungen}
     \begin{frame}[plain,standout]
         \centering
         \textbf{ERSTE VISUALISIERUNGEN}
     \end{frame}
-
-    \Section{Erste Visualisierungen}
 
     \begin{frame}{Threads}
         \begin{figure}
@@ -406,14 +342,11 @@
         \end{figure}
     \end{frame}
 
-    \End
-
+    \Section{Erste Ergebnisse}
     \begin{frame}[plain,standout]
         \centering
         \textbf{ERSTE ERGEBNISSE}
     \end{frame}
-
-    \Section{Erste Ergebnisse}
 
     \begin{frame}{Einsichten}
         \begin{itemize}
@@ -423,20 +356,18 @@
             \item Muster im Threadaufbau = kurz, simpel, wenig verzweigt
         \end{itemize}
     \end{frame}
-    \End
 
+    \Section{Naechste Schritte}
     \begin{frame}[plain,standout]
         \centering
         \textbf{NÄCHSTE SCHRITTE}
     \end{frame}
 
-    \Section{Naechste Schritte}
-
-    \begin{frame}{Was Lohnt Sich}
+    \begin{frame}{Nächste Schritte}
         \begin{itemize}
-            \item Einsichten der Heatmaps sind sehr interessant
-            \item Vergleich zwischen Polylogen und Dialogen
-            \item Vergleich zwischen Delta Threads und Subset von nicht-Delta Threads?
+            \item Einsichten der Heatmaps weiter untersuchen, Visualisierung der Cluster-Struktur weiter ausbauen
+            \item Vergleich zwischen Delta Threads und (Subset von) nicht-Delta Threads auf Cluster Ebene
+            \item Vergleich zwischen Clustern auf ADU-Type Ebene
         \end{itemize}
     \end{frame}
 
